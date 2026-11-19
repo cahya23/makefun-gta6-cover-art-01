@@ -3,20 +3,67 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Cover Snap</title>
+<meta name="description" content="Vice Sunset Cover Lab — turn your own photo and caption into a multi-panel sunset poster cover, exported as a PNG. Works offline.">
+<title>Vice Sunset Cover Lab — make your own sunset poster cover</title>
 <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-<main class="app">
-  <section class="controls">
-    <h1>Cover Snap</h1>
-    <p>A photo and a caption, made into a square cover.</p>
-    <label>Photo <input id="photo" type="file" accept="image/*"></label>
-    <label>Caption <input id="caption" type="text" maxlength="40" value="Sunset Heist"></label>
-    <button id="export" type="button">Export PNG 1080 x 1080</button>
-    <p id="status" role="status"></p>
+<main class="lab">
+  <header class="masthead">
+    <h1>Vice Sunset Cover Lab</h1>
+    <p>Your photo, your words — a sunset poster cover in three taps. Photos never leave this machine.</p>
+    <p class="steps">Pick a photo per panel · choose a layout and grade · export the PNG.</p>
+  </header>
+  <section class="editor">
+    <div class="controls" id="controls">
+      <fieldset>
+        <legend>1 · Photos — one per panel, or one photo everywhere</legend>
+        <div class="panel-pickers" id="panelPickers"></div>
+        <button id="fillAll" type="button">Fill every panel with panel 1</button>
+      </fieldset>
+      <fieldset>
+        <legend>2 · Layout</legend>
+        <div class="choices" id="layoutChoices"></div>
+      </fieldset>
+      <fieldset>
+        <legend>3 · Colour grade</legend>
+        <div class="choices" id="gradeChoices"></div>
+      </fieldset>
+      <fieldset>
+        <legend>4 · Words</legend>
+        <label>Title <input id="title" type="text" maxlength="24" value="Neon Shore"></label>
+        <label>Subtitle <input id="subtitle" type="text" maxlength="40" value="one last summer drive"></label>
+      </fieldset>
+      <fieldset>
+        <legend>5 · Selected panel</legend>
+        <p class="hint">Click a panel on the preview, then drag it to move the photo inside it.</p>
+        <label>Zoom <input id="zoom" type="range" min="1" max="2.5" step="0.05" value="1"></label>
+        <label>Move left / right <input id="panX" type="range" min="-0.4" max="0.4" step="0.01" value="0"></label>
+        <label>Move up / down <input id="panY" type="range" min="-0.4" max="0.4" step="0.01" value="0"></label>
+      </fieldset>
+      <fieldset>
+        <legend>6 · Finish</legend>
+        <label class="check"><input id="grain" type="checkbox" checked> Film grain</label>
+        <label class="check"><input id="vignette" type="checkbox" checked> Vignette</label>
+        <label>Export size
+          <select id="size">
+            <option value="square">Square 1080 x 1080</option>
+            <option value="portrait">Portrait 1080 x 1350</option>
+            <option value="wide" selected>Wide 1920 x 1080</option>
+          </select>
+        </label>
+        <button id="export" type="button" class="export">Export PNG</button>
+        <p id="status" role="status"></p>
+      </fieldset>
+    </div>
+    <div class="preview">
+      <canvas id="cover" width="960" height="540" aria-label="Live preview of the cover"></canvas>
+      <p class="hint">Live preview — what you see is what the PNG looks like.</p>
+    </div>
   </section>
-  <canvas id="cover" width="1080" height="1080" aria-label="The cover"></canvas>
+  <footer>
+    <p>Original artwork made by this app from your own photos. No game logos, artwork or fonts are used.</p>
+  </footer>
 </main>
 <script type="module" src="./src/main.js"></script>
 </body>

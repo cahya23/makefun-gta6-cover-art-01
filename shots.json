@@ -1,5 +1,1 @@
-[
-  { "name": "1-cover.jpg", "query": "?shot=cover&photo=pier&caption=Sunset%20Heist", "w": 1080, "h": 1080 },
-  { "name": "2-editor.jpg", "query": "?shot=editor&photo=boulevard&caption=Boulevard%20Queen", "w": 1280, "h": 720 },
-  { "name": "3-cover.jpg", "query": "?shot=cover&photo=boulevard&caption=Boulevard%20Queen", "w": 1080, "h": 1080 }
-]
+[{"h":720,"name":"1-cover.jpg","query":"?shot=cover&layout=hero&grade=sunset&size=wide&photo=pier&caption=Neon%20Shore&subtitle=one%20last%20summer%20drive","w":1280},{"h":800,"name":"2-editor.jpg","query":"?shot=editor&layout=grid&grade=neon&photo=boulevard&caption=Neon%20Shore&subtitle=one%20last%20summer%20drive","w":1280},{"h":1280,"name":"3-cover.jpg","query":"?shot=cover&layout=grid&grade=neon&size=portrait&photo=boulevard&caption=Palm%20Dusk&subtitle=city%20lights%20after%20dark","w":1024}]

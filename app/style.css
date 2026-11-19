@@ -1,12 +1,140 @@
-html, body { margin: 0; height: 100%; background: #f2f0f4; color: #1d1b22; font: 15px/1.4 system-ui, sans-serif; }
-.app { display: flex; gap: 32px; align-items: center; justify-content: center; height: 100%; padding: 24px; box-sizing: border-box; }
-.controls { display: flex; flex-direction: column; gap: 14px; width: 280px; }
-.controls h1 { margin: 0; font-size: 28px; }
-.controls p { margin: 0; color: #5c5866; }
-label { display: flex; flex-direction: column; gap: 6px; font-weight: 600; }
-input[type=text] { font: inherit; padding: 8px; border: 1px solid #c9c4d1; border-radius: 6px; }
-button { font: inherit; font-weight: 700; padding: 10px; border: 0; border-radius: 6px; background: #1d1b22; color: #fff; cursor: pointer; }
-canvas { width: min(70vh, 60vw); height: min(70vh, 60vw); box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2); }
-body.shot-cover .controls { display: none; }
-body.shot-cover .app { padding: 0; }
-body.shot-cover canvas { width: 100vw; height: 100vh; box-shadow: none; }
+/* Vice Sunset Cover Lab — dark neon editor chrome, offline look.
+   Lettering comes from the bundled Anton and Pacifico files under fonts/. */
+@font-face {
+  font-family: 'Anton';
+  src: url('fonts/Anton-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Pacifico';
+  src: url('fonts/Pacifico-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-display: swap;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: #12081f;
+  color: #f5eefc;
+  font-family: Verdana, Geneva, sans-serif;
+  font-size: 15px;
+  line-height: 1.45;
+}
+.lab { max-width: 1240px; margin: 0 auto; padding: 20px 22px 40px; }
+.masthead h1 {
+  font-family: Anton, "Arial Black", sans-serif;
+  font-size: 42px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin: 6px 0 2px;
+  color: #fff;
+  text-shadow: 3px 3px 0 #ff2e88, 6px 6px 0 rgba(0, 229, 199, 0.55);
+}
+.masthead p { margin: 0 0 18px; color: #d9c8ef; }
+.masthead .steps { color: #ffd166; font-weight: bold; margin-bottom: 20px; }
+button:focus-visible, input:focus-visible, select:focus-visible {
+  outline: 3px solid #00e5c7;
+  outline-offset: 2px;
+}
+.editor { display: grid; grid-template-columns: 340px 1fr; gap: 22px; align-items: start; }
+.controls fieldset {
+  border: 1px solid #4b2a6e;
+  border-radius: 10px;
+  padding: 12px 14px 14px;
+  margin: 0 0 14px;
+  background: #1d0f31;
+}
+.controls legend {
+  font-family: Anton, "Arial Black", sans-serif;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #ffd166;
+  padding: 0 6px;
+}
+.controls label { display: block; margin: 8px 0; font-size: 14px; }
+.controls input[type="text"], .controls select {
+  width: 100%;
+  padding: 8px 10px;
+  margin-top: 4px;
+  border-radius: 6px;
+  border: 1px solid #6b4a94;
+  background: #12081f;
+  color: #fff;
+  font-size: 15px;
+}
+.controls input[type="range"] { width: 100%; accent-color: #ff2e88; }
+.choices { display: flex; flex-wrap: wrap; gap: 8px; }
+.choices button, .panel-pickers button, #fillAll {
+  border: 1px solid #6b4a94;
+  background: #2a1745;
+  color: #f5eefc;
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 13px;
+  cursor: pointer;
+}
+.choices button[aria-pressed="true"] {
+  background: #ff2e88;
+  border-color: #ff2e88;
+  color: #fff;
+  font-weight: bold;
+}
+.panel-pickers { display: grid; grid-template-columns: 1fr; gap: 8px; }
+.panel-pickers input[type="file"] { max-width: 100%; width: 100%; }
+.controls fieldset { min-width: 0; overflow: hidden; }
+.panel-pickers button[aria-pressed="true"] { outline: 2px solid #00e5c7; }
+.panel-pickers button { text-align: left; }
+#fillAll { width: 100%; margin-top: 8px; }
+.check { display: block; }
+.export {
+  width: 100%;
+  padding: 13px;
+  margin-top: 10px;
+  border: 0;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #ff9a3d, #ff2e88);
+  color: #fff;
+  font-family: Anton, "Arial Black", sans-serif;
+  font-size: 20px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.export:hover { filter: brightness(1.12); }
+#status { min-height: 1.2em; color: #7cf5d6; }
+.hint { color: #b9a3d6; font-size: 13px; }
+.preview { position: sticky; top: 16px; }
+.preview canvas {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 12px;
+  border: 3px solid #ff2e88;
+  box-shadow: 0 0 34px rgba(255, 46, 136, 0.35);
+  background: #1c0b2e;
+  cursor: grab;
+}
+footer p { color: #8f76b5; font-size: 13px; margin-top: 22px; }
+
+/* Screenshot scenes: the cover alone, edge to edge, no editor chrome. */
+body.shot-cover { background: #000; }
+body.shot-cover .lab { max-width: none; padding: 0; margin: 0; }
+body.shot-cover .masthead, body.shot-cover .controls, body.shot-cover footer,
+body.shot-cover .preview .hint { display: none; }
+body.shot-cover .editor { display: block; }
+body.shot-cover .preview { position: static; }
+body.shot-cover .preview canvas {
+  width: 100vw;
+  height: 100vh;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+@media (max-width: 860px) {
+  .editor { grid-template-columns: 1fr; }
+  .preview { position: static; }
+  .masthead h1 { font-size: 30px; }
+}
